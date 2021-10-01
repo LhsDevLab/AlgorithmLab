@@ -6,25 +6,47 @@ let n = parseInt(input.shift());
 
 for(n; n>0;n--){
     const [w,h,k] = input.shift().split(' ').map(e=>{return parseInt(e)});
-    const stack = [];
-    const idxing_x = [];
-    const idxing_y = [];
+    const target = [];
+    const board = [];
+    let res = 0;
 
-    for(let i=0; i<w; i++){
-        idxing_x[i] = new Set();
+    function checkAndAdd(stack,[x,y]){
+        if (x < 0 || y < 0 || x >= w || y >= h)
+            return;
+        stack.push([x,y])
     }
-    for(let i=0; i<h; i++){
-        idxing_y[i] = new Set();
-    };
+    function addAdjacent(stack,[x,y]){
+        checkAndAdd(stack,[x-1,y]);
+        checkAndAdd(stack,[x+1,y]);
+        checkAndAdd(stack,[x,y+1]);
+        checkAndAdd(stack,[x,y-1]);
+    }
+    for(let i=0; i<w; i++){
+        board[i] = [];
+    }
     
     for(let i=0; i<k; i++){
         const [x,y] = input.shift().split(' ').map(e=>{return parseInt(e)});
-        stack.push([x,y]);
-        idxing_x[x].add(y);
-        idxing_y[y].add(x);
+        target.push([x,y]);
+        board[x][y] = true;
     }
-
-    console.log(stack);
-    console.log(idxing_x);
-    console.log(idxing_y);
+    
+    while(target.length > 0){
+        const [x,y] = target.pop();
+        if (board[x][y] === undefined) continue;
+        else {
+            const stack = [];
+            res += 1;
+            addAdjacent(stack,[x,y]);
+            while(stack.length > 0){
+                const [x,y] = stack.pop();
+                if (board[x][y] === undefined) continue;
+                else{
+                    board[x][y] = undefined;
+                    addAdjacent(stack,[x,y]);
+                }
+            }
+        }
+    };
+    console.log(res);
 }
