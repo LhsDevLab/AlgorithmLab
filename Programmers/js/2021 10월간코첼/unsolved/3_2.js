@@ -3,42 +3,46 @@ function solution(n, m, x, y, queries) {
     let ableList = {};
 
     function func1(pos,opr){
+        function checkAndPush(e){
+            if ((e[0] >= 0 && e[0] <n) && (e[1] >= 0 && e[1] <m))
+                res.push(e);
+        }
         let res = [];
         switch(opr[0]){
             case(0):
             if (pos[1] == 0){
                 for(let i=0; i<=opr[1];i++)
-                    res.push([pos[0],i]);
+                checkAndPush([pos[0],i]);
             }
             else
-                res.push([pos[0],pos[1]-opr[1]]);
+            checkAndPush([pos[0],pos[1]-opr[1]]);
             break;
             case(1):
             if (pos[1] == m-1){
                 for(let i=0; i<=opr[1];i++)
-                    res.push([pos[0],pos[1]-i]);
+                checkAndPush([pos[0],pos[1]-i]);
             }
             else
-                res.push([pos[0],pos[1]+opr[1]]);
+            checkAndPush([pos[0],pos[1]+opr[1]]);
             break;
             case(2):
             if (pos[0] == 0){
                 for(let i=0; i<=opr[1];i++)
-                    res.push([i,pos[1]]);
+                checkAndPush([i,pos[1]]);
             }
             else
-                res.push([pos[0]-opr[1],pos[1]]);
+            checkAndPush([pos[0]-opr[1],pos[1]]);
             break;
             case(3):
             if (pos[0] == n-1){
                 for(let i=0; i<=opr[1];i++)
-                    res.push([pos[0]-i,pos[1]]);
+                checkAndPush([pos[0]-i,pos[1]]);
             }
             else
-                res.push([pos[0]-opr[1],pos[1]]);
+            checkAndPush([pos[0]-opr[1],pos[1]]);
             break;
         }
-        return res.filter(e=>(e[0] >= 0 && e[0] <n) && (e[1] >= 0 && e[1] <m));
+        return res;
     }
     function add(pos){
         if (ableList[pos[0]] == undefined)
