@@ -17,8 +17,6 @@ function solution(s) {
         },
         e : [8,5],
         n : [9,4],
-        
-        
     }
     let current = compareTable;
     let idx = 0;
