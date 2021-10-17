@@ -1,12 +1,12 @@
-import sys;
+import sys
 
-T = int(sys.stdin.readline());
+T = int(sys.stdin.readline())
 
 def F(n):
-    res = 10;
+    res = 10
     while res <= n:
-        res *= 10;
-    return res-1-n;
+        res *= 10
+    return res-1-n
 
 cases = []
 for idx in range(T):
@@ -15,7 +15,7 @@ for idx in range(T):
 for case in cases:
     target = 10;
     while target <= case:
-        target *= 10;
+        target *= 10
     target /= 2
     if case < target:
         target = case
