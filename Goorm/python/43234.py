@@ -32,6 +32,7 @@ def isCorrect(A,B):
     return arr
 
 correctSet = []
+
 for A,B in pairList:
     res = isCorrect(A,B)
     if (res != False):
