@@ -1,4 +1,4 @@
 *.txt
 test.js
 test.py
-./java_project/
+java_project/
