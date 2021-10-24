@@ -46,7 +46,6 @@ function getRes(pos1, pos2){
     
 }
 
-
 let res = pos1.shift();
 
 if (isEven){
@@ -56,9 +55,6 @@ if (isEven){
 else{
 
 }
-
-
-
 
 console.log(res);
 console.log(pos2);
