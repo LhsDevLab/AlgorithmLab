@@ -1,39 +1,45 @@
 import sys;
 
 N = int(sys.stdin.readline());
-tasks = [[] for _ in range(N+1)];
+links = [[] for _ in range(N+1)];
 parents = [0 for _ in range(N+1)];
+parents[1] = 0;
+depths = [0 for _ in range(N+1)];
+depths[1] = 1;
+
 for _ in range(N-1) :
     a,b = map(int,sys.stdin.readline().split(' '));
-    tasks[a].append(b);
-    tasks[b].append(a);
+    links[a].append(b);
+    links[b].append(a);
 
-def setParents(node):
-    for e in tasks[node] :
-        if e != parents[node] :
-            parents[e] = node;
-            setParents(e);
-setParents(1);
+stack = [1];
+while len(stack) != 0 :
+    node = stack.pop();
+    for link in links[node] :
+        if depths[link] != 0 :
+            parents[node] = link;
+            depths[node] = depths[parents[node]]+1;
+        else : 
+            stack.append(link);
+
+def getAncestor(node, depth) :
+    while depths[node] != depth :
+        node = parents[node];
+    return node;
 
 res = "";
 M = int(sys.stdin.readline());
 for _ in range(M) :
     a,b = map(int,sys.stdin.readline().split(' '));
-    if a == b :
-        res += str(a)+'\n';
-        break;
-    A = [a];
-    while parents[a] != 0 :
-        a = parents[a];
-        A.append(a);     
-    B = [b];
-    while parents[b] != 0 :
-        b = parents[b];
-        B.append(b);     
-    i = 0; 
-    while True:
-        if A[len(A)-i-1] != B[len(B)-i-1]:
-            res += str(A[len(A)-i])+"\n";
+    depth = min(depths[a],depths[b]);
+    while True :
+        if depth == 1 : 
+            res += '1\n';
             break;
-        i += 1;
+        A = getAncestor(a,depth);
+        B = getAncestor(b,depth);
+        if A == B :
+            res += str(A)+'\n';
+            break;
+        depth -= 1;
 print(res[0:-1]);
