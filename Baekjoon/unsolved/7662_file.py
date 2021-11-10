@@ -4,9 +4,16 @@ input = open("input2.txt","r")
 T = int(input.readline())
 
 class MMheap:
+    
     def __init__(self):
         pass
-    
+    function PUSH-DOWN(h, i):
+        if i is on a min level then:
+            PUSH-DOWN-MIN(h, i)
+        else:
+            PUSH-DOWN-MAX(h, i)
+        endif
+        
     def push_down_max(h, i):
         if i has children then:
             m := index of the largest child or grandchild of i
@@ -22,12 +29,7 @@ class MMheap:
                 swap h[m] and h[i]
             endif 
         endif
-    function PUSH-DOWN(h, i):
-        if i is on a min level then:
-            PUSH-DOWN-MIN(h, i)
-        else:
-            PUSH-DOWN-MAX(h, i)
-        endif
+    
     function PUSH-DOWN-MIN-ITER(h, m):
     while m has children then:
         i := m
