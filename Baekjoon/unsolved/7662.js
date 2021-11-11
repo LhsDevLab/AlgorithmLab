@@ -8,74 +8,67 @@ function inputReader(file, spliter){
 const reader = new inputReader('input.txt', "\r\n")
 //const reader = new inputReader('/dev/stdin', "\n")
 
-function PriorityQueue(){
-    const array = []
-    function BottomUp(index){
-        while(index != 0){
-            let parent = Math.floor((index-1)/2)
-            if (array[parent] < array[index])
-                [array[parent],array[index]] = [array[index],array[parent]]
-            index = parent
-        }
+function MMheap(){
+    const arr = []
+    function isMinlvl(i){
+        return Math.floor(Math.log2(i))%2 == 0 ? true : false
     }
-    function TopDown(index){
-        let left = index*2
-        let right = index*2+1
-        while(array.length > left){
-            if (array.length <= right){
-                if (array[left] > array[index]){
-                    [array[left],array[index]] = [array[index],array[left]]
-                    index = left
+    function getChild(i){
+        if (arr in i*2+2)
+            return [arr[i*2+2], arr[i*2+1]]
+        else if (arr in i*2+1)
+            return [arr[i*2+1]]
+        else
+            return []
+    }
+    function getParent(i){
+        return Math.floor((i-1)/2)
+    }
+    function push_down(i){
+        if (isMinlvl(i))
+            push_down_min(i)
+        else
+            push_down_max(i)
+    }
+    function push_down_min(i){
+        let childs = getChild(i)
+        if (childs.length != 0){
+            let grandChilds = []
+            for(child of childs)
+                grandChilds.concat(getChild(child))
+            let m = [...childs,...grandChilds].reduce((a,c)=>arr[a] < arr[c] ? a : c)
+            if (grandChilds.includes(m)){
+                if (arr[m] < arr[i]){
+                    arr[m],arr[i] = arr[i],arr[m]
+                    let parent = getParent(m)
+                    if (arr[m] > arr[parent])
+                        arr[m],arr[parent] = arr[parent],arr[m]
+                    push_down_min(m)
                 }
             }
-            else{
-                const larger = (array[right]>array[left]) ? right : left;
-                if (array[larger] > array[index]){
-                    [array[larger],array[index]] = [array[index],array[larger]]
-                    index = larger
+            else if (arr[m] < arr[i])
+                arr[m],arr[i] = arr[i],arr[m]
+        }
+    }
+    function push_down_max(i){
+        let childs = getChild(i)
+        if (childs.length != 0){
+            let grandChilds = []
+            for(child of childs)
+                grandChilds.concat(getChild(child))
+            let m = [...childs,...grandChilds].reduce((a,c)=>arr[a] > arr[c] ? a : c)
+            if (grandChilds.includes(m)){
+                if (arr[m] > arr[i]){
+                    arr[m],arr[i] = arr[i],arr[m]
+                    let parent = getParent(m)
+                    if (arr[m] < arr[parent])
+                        arr[m],arr[parent] = arr[parent],arr[m]
+                    push_down_max(m)
                 }
             }
-            left = index*2
-            right = index*2+1
+            else if (arr[m] < arr[i])
+                arr[m],arr[i] = arr[i],arr[m]
         }
-    }
-    this.getMin = ()=>{
-        let index = array.length-1
-        let parent = Math.floor((index-1)/2)
-        let min = array[index]
-        for (let i=index; i>parent; i--){
-            if (min > array[i]){
-                min = array[i]
-                index = i
-            }
-        }
-        return [index,min]
-    }
-    this.getMax = ()=> array.length == 0 ? null : array[0]
-    this.enQueue = (item)=>{
-        array.push(item)
-        if (array.length != 1)
-            BottomUp(array.length-1)
-    }
-    this.deQueueMax = () =>{
-        if (array.length == 0) return null
-        if (array.length == 1) return array.pop()
-        let res = array[0]
-        array[0] = array.pop()
-        if (array.length != 1)
-            TopDown(0)
-        return res
-    }
-    this.deQueueMin = ()=>{
-        if (array.length == 0) return null
-        if (array.length == 1) return array.pop()
-        let [index, min] = this.getMin()
-        if (index == array.length-1) return array.pop()
-        let res = min
-        array[index] = array.pop()
-        if (array.length != 1)
-            BottomUp(index)
-        return res
     }
 }
 
