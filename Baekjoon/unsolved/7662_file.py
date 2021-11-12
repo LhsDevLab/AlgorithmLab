@@ -1,54 +1,44 @@
 import sys
-import math
-input = open("input2.txt","r")
+from queue import PriorityQueue
 
-T = int(input.readline())
+T = int(sys.stdin.readline())
 
-class MMheap:
+class dualPQ:
     def __init__(self):
-        self.arr = []
-    def isMinlvl(self, i):
-        return True if int(math.log2(i))%2 == 0 else False
-    def getChild(self, i):
-        if len(self.arr) > i*2+2:
-            return [self.arr[i*2+2], self.arr[i*2+1]]
-        elif len(self.arr) == i*2+1:
-            return [self.arr[i*2+1]]
+        self.maxQ = PriorityQueue()
+        self.minQ = PriorityQueue()
+        self.count = dict()
+    def push(self,value):
+        self.maxQ.put(-value)
+        self.minQ.put(value)
+        if value in self.count:
+            self.count[value] += 1
         else:
-            return []
-    def getParent(self, i):
-        return int((i-1)/2)
-    def push_down(self, i):
-        if self.isMinlvl(i):
-            self.push_down_min(self, i)
-        else:
-            self.push_down_max(self, i)
-    def push_down_min(self, i):
-        childs = self.getChild(self, i)
-        if len(childs) != 0:
-            grandChilds = []
-            for item in map(lambda e : self.getChild(self, e), childs):
-                grandChilds += item
-            m = min(childs+grandChilds, key=lambda e: self.arr[e])
-            if m in childs:
-                if self.arr[m] < self.arr[i] :
-                    self.arr[m],self.arr[i] = self.arr[i],self.arr[m]
-                    if self.arr[m] > self.arr[self.getParent(m)] :
-                        self.arr[m],self.arr[self.getParent(m)] = self.arr[self.getParent(m)],self.arr[m]
-                    self.push_down_min(self, m)
-            elif self.arr[m] < self.arr[i]:
-                self.arr[m],self.arr[i] = self.arr[i],self.arr[m]
-    def push_down_max(self, i):
-        
-        
+            self.count[value] = 1
+    def popMin(self):
+        while True:
+            if self.minQ.empty():
+                return None
+            res = self.minQ.get()
+            if res in self.count and self.count[res] > 0:
+                self.count[res] -= 1
+                return res;
+    def popMax(self):
+        while True:
+            if self.maxQ.empty():
+                return None
+            res = -self.maxQ.get()
+            if res in self.count and self.count[res] > 0:
+                self.count[res] -= 1
+                return res;
 
 for _ in range(T):
-    K = int(input.readline())
+    K = int(sys.stdin.readline())
     queue = dualPQ()
     for _ in range(K):
-        opr, num = input.readline().split(' ')
+        opr, num = sys.stdin.readline().split(' ')
         if opr == 'I':
-            queue.push(Node(int(num)))
+            queue.push(int(num))
         else:
             if int(num) == -1:
                 queue.popMin()
