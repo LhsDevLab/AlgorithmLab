@@ -1,5 +1,5 @@
 import sys
-input = open("input.txt","r")
+input = open("input2.txt","r")
 
 def isCross(A,B):
     def vec(a,b):
@@ -17,7 +17,8 @@ def isCross(A,B):
     v3 = ccw(vec(B[0],B[1]),vec(B[0],A[0]))
     v4 = ccw(vec(B[0],B[1]),vec(B[0],A[1]))
     if v1==v2==v3==v4==0:
-        if rangeCheck((A[0][0],A[1][0]),(B[0][0],B[1][0])) and rangeCheck((A[0][1],A[1][1]),(B[0][1],B[1][1])):
+        if ((rangeCheck((A[0][0],A[1][0]),(B[0][0],B[1][0])) and rangeCheck((A[0][1],A[1][1]),(B[0][1],B[1][1])))
+            or (rangeCheck((B[0][0],B[1][0]),(A[0][0],A[1][0])) and rangeCheck((B[0][1],B[1][1]),(A[0][1],A[1][1])))):
             return True
         else:
             return False
@@ -32,7 +33,6 @@ for _ in range(N):
     belongs = []
     for key in groups.keys():
         for item in groups[key]:
-            print(line,item, isCross(line,item))
             if isCross(line,item):
                 belongs.append(key)
                 break;
