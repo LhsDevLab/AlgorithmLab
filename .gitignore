@@ -1,4 +1,5 @@
-*.txt
+input*.txt
+output*.txt
 test.js
 test.py
 java_project/

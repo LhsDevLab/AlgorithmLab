@@ -1,0 +1,7 @@
+js 세미콜론을 스크립트 속도때문에 생략했는데, 오히려 파싱할때 세미콜론을 추가해서 작업함
+세미콜론 붙여서 작성해야겠음
+
+자동삽입규칙 - https://dev.to/adriennemiller/semicolons-in-javascript-to-use-or-not-to-use-2nli
+1. 한줄을 파싱했을시 현재까지의 문법적 오류가 없는경우
+2. input이 끝나고 오류가 없는데 프로그램이 끝나지 않았을 경우
+3. 라인브레이크가 일어날 경우?? return문을 예시로
