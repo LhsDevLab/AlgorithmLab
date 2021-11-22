@@ -6,4 +6,3 @@ for _ in range(N):
     space = space[:-1]
     star = star+'*'
     print(space+star)
-    
