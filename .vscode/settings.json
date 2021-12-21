@@ -1,5 +1,5 @@
 {
     "java.project.sourcePaths": [
-        "java_project/algoLab/src"
+        "java_project/main/src"
     ]
 }
