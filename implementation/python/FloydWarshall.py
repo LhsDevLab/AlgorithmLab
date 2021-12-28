@@ -1,24 +1,18 @@
 def F_W(edges):
     N = len(edges);
-    dp = [];
-    for e in edges:
-        dp.append(e[:]);
     for _ in range(N-1):
         isDirty = False;
         for node in range(1,N):
             for i in range(1,N):
-                if i == node: continue;
                 for j in range(1,N):
-                    if j == node: continue;
-                    elif dp[i][j] > dp[i][node] + dp[node][j]:
-                        dp[i][j] = dp[i][node] + dp[node][j]
+                    if edges[i][j] > edges[i][node] + edges[node][j]:
+                        edges[i][j] = edges[i][node] + edges[node][j]
                         isDirty = True
         if isDirty == False:
             break;
     else:
         return True;
-
-    return dp;
+    return edges;
 
 N,M,W = map(int, input().split());
 edges = [[float("inf") for _ in range(N+1)] for _ in range(N+1)];
