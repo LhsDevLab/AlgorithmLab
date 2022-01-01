@@ -22,4 +22,4 @@ while front < rear:
         rear = middle;
     else:
         front = middle+1;
-print(rear-1);
+print(front-1 if count(front) < N else front);
