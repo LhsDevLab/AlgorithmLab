@@ -1,15 +1,10 @@
-N,M = map(int,input().split());
-graph = {};
-def add(node,v):
-    global graph;
-    if graph.get(node) == None:
-        graph[node] = {v};
-    else:
-        graph[node].add(v);
+import sys;
+N,M = map(int,sys.stdin.readline().split());
+graph = dict([(i,set()) for i in range(1,N+1)]);
 for _ in range(M):
-    a,b = map(int,input().split());
-    add(a,b);
-    add(b,a);
+    a,b = map(int,sys.stdin.readline().split());
+    graph[a].add(b);
+    graph[b].add(a);
 keys = set(graph.keys());
 answer = 0;
 while len(keys) != 0:
