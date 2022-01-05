@@ -8,12 +8,12 @@ def push():
     global answer;
     stack.append(num);
     num += 1;
-    answer += '+';
+    answer += "+\n";
     
 def pop():
     global stack;
     global answer;
-    answer += '-';
+    answer += '-\n';
     return stack.pop();
 
 for _ in range(N):
