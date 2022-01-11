@@ -6,4 +6,3 @@ def sol(K,N):
     print(arr[N-1]);
 for _ in range(int(input())):
     sol(int(input()),int(input()));
-    
