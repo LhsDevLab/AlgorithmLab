@@ -10,11 +10,22 @@ class Main {
         for (int i = 0; i < N; i++) {
             String[] inp = br.readLine().split(" ");
             switch (inp[0]) {
-                case ("push"):
-                    queue.add(Integer.parseInt(inp[1]));
+                case ("push_front"):
+                    queue.addFirst(Integer.parseInt(inp[1]));
                     break;
-                case ("pop"):
+                case ("push_back"):
+                    queue.addLast(Integer.parseInt(inp[1]));
+                    break;
+                case ("pop_front"):
                     System.out.println(queue.size() == 0 ? -1 : queue.pop());
+                    break;
+                case ("pop_back"):
+                    int temp = -1;
+                    if (queue.size() != 0) {
+                        temp = queue.getLast();
+                        queue.removeLast();
+                    }
+                    System.out.println(temp);
                     break;
                 case ("size"):
                     System.out.println(queue.size());
