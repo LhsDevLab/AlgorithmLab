@@ -20,7 +20,7 @@ function spread(r,c){
     return res;
 }
 while (stack.length != 0){
-    let [r,c] = stack.pop();
+    let [r,c] = stack.shift();
     num = distance[r][c] + 1;
     for (let [a,b] of spread(r,c)){
         if (distance[a][b] > num){
