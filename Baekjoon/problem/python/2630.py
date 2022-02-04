@@ -20,4 +20,5 @@ while len(stack) != 0:
             break;
     else:
         count[type] += 1;
-print(count);
+for e in count:
+    print(e);
