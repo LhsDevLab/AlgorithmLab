@@ -1,11 +1,7 @@
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Stack;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 class Main {
     static HashMap<Character, Tile> tiles;
@@ -17,19 +13,10 @@ class Main {
         char type;
         HashSet<Character> blocks1 = new HashSet<>();
         HashSet<Character> blocks2 = new HashSet<>();
+        HashSet<Character> childs = new HashSet<>();
 
         Tile(char type) {
             this.type = type;
-        }
-
-        void setApos(int r, int c) {
-            a[0] = r;
-            a[1] = c;
-        }
-
-        void setBpos(int r, int c) {
-            b[0] = r;
-            b[1] = c;
         }
 
         static int[] getRange(int x, int y) {
@@ -39,24 +26,6 @@ class Main {
             for (int i = 0; i <= (M - m); i++)
                 res[i] = m + i;
             return res;
-        }
-
-        boolean isBreakable(LinkedHashSet<Character> used) {
-            boolean x = true;
-            boolean y = true;
-            for (Character c : blocks1) {
-                if (!used.contains(c)) {
-                    x = false;
-                    break;
-                }
-            }
-            for (Character c : blocks2) {
-                if (!used.contains(c)) {
-                    y = false;
-                    break;
-                }
-            }
-            return x || y;
         }
 
         boolean scan() {
@@ -86,7 +55,7 @@ class Main {
 
     static public String solution(int m, int n, String[] board) {
         tiles = new HashMap<>();
-        String answer = "IMPOSSIBLE";
+        final String wrong = "IMPOSSIBLE";
         brd = new char[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -95,50 +64,66 @@ class Main {
                 if (c != '.' && c != '*') {
                     if (tiles.get(c) == null) {
                         tiles.put(c, new Tile(c));
-                        tiles.get(c).setApos(i, j);
-                    } else
-                        tiles.get(c).setBpos(i, j);
-                }
-            }
-        }
-        Character[] temp = tiles.keySet().toArray(new Character[0]);
-        Arrays.sort(temp, Comparator.reverseOrder());
-        LinkedHashSet<Character> keys = new LinkedHashSet<>();
-        for (Character c : temp) {
-            if (!tiles.get(c).scan())
-                return answer;
-            keys.add(c);
-        }
-        Stack<LinkedHashSet<Character>> stack = new Stack<>();
-        stack.add(new LinkedHashSet<>());
-        while (stack.size() != 0) {
-            LinkedHashSet<Character> used = stack.pop();
-            if (used.size() == tiles.size()) {
-                answer = used.stream().map(e -> e + "").collect(Collectors.joining());
-                break;
-            }
-            for (Character key : keys) {
-                if (!used.contains(key)) {
-                    if (tiles.get(key).isBreakable(used)) {
-                        LinkedHashSet<Character> next = (LinkedHashSet<Character>) used.clone();
-                        next.add(key);
-                        stack.add(next);
+                        tiles.get(c).a[0] = i;
+                        tiles.get(c).a[1] = j;
+                    } else {
+                        tiles.get(c).b[0] = i;
+                        tiles.get(c).b[1] = j;
+
                     }
                 }
             }
         }
-        return answer;
+        for (Tile tile : tiles.values()) {
+            if (!tile.scan())
+                return wrong;
+            for (char c : tile.blocks1) {
+                if (c == '*')
+                    continue;
+                tiles.get(c).childs.add(tile.type);
+            }
+            for (char c : tile.blocks2) {
+                if (c == '*')
+                    continue;
+                tiles.get(c).childs.add(tile.type);
+            }
+        }
+        Character[] keys = tiles.keySet().toArray(new Character[0]);
+        Arrays.sort(keys);
+        HashSet<Character> used = new HashSet<>();
+        String res = "";
+        while (true) {
+            if (res.length() == keys.length)
+                break;
+            boolean flag = true;
+            for (char key : keys) {
+                if (used.contains(key))
+                    continue;
+                Tile tile = tiles.get(key);
+                if (tile.blocks1.size() == 0 || tile.blocks2.size() == 0) {
+                    res += key;
+                    for (char c : tile.childs) {
+                        tiles.get(c).blocks1.remove(key);
+                        tiles.get(c).blocks2.remove(key);
+                    }
+                    used.add(key);
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+                return wrong;
+        }
+        return res;
     }
 
     public static void main(String[] args) throws Exception {
-        String[] board = { "DBA",
-                "C*A",
-                "CDB" };
         // String[] board = { "NRYN", "ARYA" };
+        // String[] board = { "AB", "BA" };
         // String[] board = { ".ZI.", "M.**", "MZU.", ".IU." };
-        // String[] board = { "M...M...DU", "....AR...R", "...E..OH.H", ".....O....",
-        // ".E..A..Q..", "Q....LL.*.",
-        // ".D.N.....U", "GT.T...F..", "....FKS...", "GN....K..S" };
-        System.out.println(solution(3, 3, board));
+        String[] board = { "M...M...DU", "....AR...R", "...E..OH.H", ".....O....",
+                ".E..A..Q..", "Q....LL.*.",
+                ".D.N.....U", "GT.T...F..", "....FKS...", "GN....K..S" };
+        System.out.println(solution(10, 10, board));
     }
 }
