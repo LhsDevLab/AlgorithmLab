@@ -1,5 +1,4 @@
 function solution(grid) {
-    let answer = [];
     let [h,w] = [grid.length, grid[0].length];
     let dirList = [[1,0],[0,-1],[-1,0],[0,1]];
     let visited = {};
@@ -12,7 +11,7 @@ function solution(grid) {
             S : ()=>{}
         }
         function mv(key){
-            console.log(key);
+            visited[key] = true;
             cluster.add(key);
             let [a,b] = dirList[dir];
             r = (r+a+h)%h;
@@ -22,15 +21,14 @@ function solution(grid) {
         mv([r,c,dir].toString());
         while (true){
             let key = [r,c,dir].toString();
-            if (visited[key] == true)
-                return;
-            else if (cluster.has(key)){
+            if (cluster.has(key)){
                 cluster = Array.from(cluster);
                 cluster = cluster.slice(cluster.indexOf(key));
                 cycles.push(new Set(cluster));
                 return;
             }
-            visited[key] = true;
+            else if (visited[key] == true)
+                return;
             mv(key);
         }
     }
@@ -40,8 +38,6 @@ function solution(grid) {
                 if (!visited[r,c,dir.toString()])
                     getTravel(r,c,dir);
     }
-    answer = cycles.map(e=>e.size);
-    answer.sort();
-    return answer;
+    return cycles.map(e=>e.size).sort((a, b) => a - b);
 }
-console.log(solution(["RL","LR"]));
+console.log(solution(["LLRSSL","LLRSSR"]));
