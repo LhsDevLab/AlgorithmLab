@@ -1,0 +1,5 @@
+function bitCalcul(){
+    this.toBit=()=>{
+
+    }
+}
