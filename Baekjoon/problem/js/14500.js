@@ -20,25 +20,33 @@ function get(arr, r,c){
     try{
         return arr[r][c];
     }catch(e){
-        return null;
+        return undefined;
     }
 }
 for (let r=0; r<N; r++){
     for(let c=0; c<M; c++){
         [
-            get(sumV,r,c)+get(sumV,r,c+1),
             get(sumH,r,c)+get(sumH,r,c+2),
-            get(sumH,r,c)+get(sumV,r+1,c),
+            get(sumV,r,c)+get(sumV,r+2,c),
+
+            get(sumH,r,c)+get(sumH,r+1,c),
+
+            get(sumV,r,c)+get(sumH,r+2,c),
+            get(sumV,r,c+1)+get(sumH,r+2,c),
             get(sumV,r,c)+get(sumH,r,c+1),
-            get(sumH,r,c)+get(sumV,r,c+2),
+            get(sumV,r,c+2)+get(sumH,r,c),
+            get(sumH,r,c)+get(sumV,r+1,c+1),
+            get(sumH,r,c)+get(sumV,r+1,c),
+            get(sumH,r+1,c)+get(sumV,r,c+2),
+            get(sumH,r+1,c+1)+get(sumV,r,c),
+
             get(sumV,r,c)+get(sumV,r+1,c+1),
-            get(sumV,r,c+1)+get(sumV,r+1,c),
-            get(sumH,r,c)+get(sumH,r+1,c+1),
             get(sumH,r+1,c)+get(sumH,r,c+1),
+            get(sumV,r+1,c)+get(sumV,r,c+1),
+            get(sumH,r,c)+get(sumH,r+1,c+1),
+
             get(sumV,r,c+1)+get(board,r,c)+get(board,r,c+2),
             get(sumV,r,c+1)+get(board,r+1,c)+get(board,r+1,c+2),
-            get(sumV,r,c)+get(sumH,r+2,c),
-            get(sumV,r,c)+get(sumV,r+2,c),
             get(sumH,r+1,c)+get(board,r,c)+get(board,r+2,c),
             get(sumH,r+1,c)+get(board,r,c+1)+get(board,r+2,c+1),
         ].forEach(e=>{
