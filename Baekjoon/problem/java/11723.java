@@ -1,39 +1,39 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.HashSet;
 
 class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int M = Integer.parseInt(br.readLine());
-        HashSet<Integer> set = new HashSet<>();
+        int[] powers = new int[21];
+        final int fillAll = (1 << 21) - 1;
+        for (int i = 0; i < 20; i++)
+            powers[i + 1] = 1 << i;
+        int set = 0;
+        StringBuilder res = new StringBuilder();
         for (int i = 0; i < M; i++) {
             String[] input = br.readLine().split(" ");
             switch (input[0]) {
                 case ("add"):
-                    set.add(Integer.parseInt(input[1]));
+                    set |= powers[Integer.parseInt(input[1])];
                     break;
                 case ("remove"):
-                    set.remove(Integer.parseInt(input[1]));
+                    set &= ~(powers[Integer.parseInt(input[1])]);
                     break;
                 case ("check"):
-                    System.out.println(set.contains(Integer.parseInt(input[1])) ? 1 : 0);
+                    res.append((set & powers[Integer.parseInt(input[1])]) > 0 ? "1\n" : "0\n");
                     break;
                 case ("toggle"):
-                    int n = Integer.parseInt(input[1]);
-                    if (set.contains(n))
-                        set.remove(n);
-                    else
-                        set.add(n);
+                    set ^= powers[Integer.parseInt(input[1])];
                     break;
                 case ("all"):
-                    for (int j = 1; j <= 20; j++)
-                        set.add(j);
+                    set = fillAll;
                     break;
                 case ("empty"):
-                    set = new HashSet<>();
+                    set = 0;
                     break;
             }
         }
+        System.out.println(res.toString().trim());
     }
 }
