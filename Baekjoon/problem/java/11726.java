@@ -10,9 +10,9 @@ class Main {
         dp[1] = 1;
         for (int i = 0; i < n; i++) {
             int temp = dp[i];
-            dp[i + 1] += temp;
-            dp[i + 2] += temp;
+            dp[i + 1] = (temp+dp[i + 1])%10007;
+            dp[i + 2] = (temp+dp[i + 2])%10007;
         }
-        System.out.println(dp[n - 1] % 10007);
+        System.out.println(dp[n - 1]);
     }
 }
