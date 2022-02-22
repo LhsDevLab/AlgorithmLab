@@ -18,6 +18,26 @@ function FloydWarshall(conn){
     }
     return true;
 }
+function FloydWarshall2(conn){
+    size = conn.length;
+    for (let _ of conn){
+        let isPlain = true;
+        for (let node=1; node<size; node++){
+            for (let i=1; i<size; i++){
+                for (let j=1; j<size; j++){
+                    let temp = conn[i][node] + conn[node][j];
+                    if (conn[i][j] > temp){
+                        conn[i][j] = temp;
+                        isPlain = false;
+                    }
+                }
+            }
+        }
+        if (isPlain)
+            return conn;
+    }
+    return true;
+}
 console.log(FloydWarshall(
     [[100, 1, 100, 100],
      [100, 100, 1, 1],
