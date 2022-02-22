@@ -13,9 +13,4 @@ const reader = {
     read : function(){
         return this.input.shift().split(" ").map(e=>parseInt(e));
     },
-    read2 : function(){
-        let res = this.read();
-        res.shift();
-        return res;
-    }
 }
