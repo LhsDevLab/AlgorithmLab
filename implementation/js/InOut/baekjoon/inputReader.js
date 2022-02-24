@@ -10,7 +10,10 @@ const reader = new inputReader('input.txt', "\r\n")
 const reader = {
     input : require('fs').readFileSync('input.txt').toString().split("\r\n"),
     // input : require('fs').readFileSync('/dev/stdin').toString().split("\n"),
-    read : function(){
-        return this.input.shift().split(" ").map(e=>parseInt(e));
+    readLine : function(){
+        return this.input.shift();
     },
+    readList : function(delimiter){
+        return this.readLine().split(delimiter).map(e=>parseInt(e));
+    }
 }
