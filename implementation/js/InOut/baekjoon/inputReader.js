@@ -14,6 +14,7 @@ const reader = {
         return this.input.shift();
     },
     readList : function(delimiter){
+        delimiter = delimiter == undefined ? " " : delimiter;
         return this.readLine().split(delimiter).map(e=>parseInt(e));
     }
 }
