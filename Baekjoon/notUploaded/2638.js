@@ -13,6 +13,7 @@ let touched = Array.from({length:N}, ()=>Array.from({length:M}, ()=>0));
 let melten = [];
 function spread(r,c, nextMelt){
     let queue = [[r,c]];
+    touched[r][c] = 1;
     while(queue.length != 0){
         let [R,C] = queue.shift();
         for (let [r,c] of [[R+1,C],[R-1,C],[R,C+1],[R,C-1]]){
