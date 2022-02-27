@@ -29,6 +29,6 @@ class Main {
         A = ABC[0];
         B = ABC[1];
         C = ABC[2];
-        System.out.println(pwd(B));
+        System.out.println(pwd(B) % C);
     }
 }
