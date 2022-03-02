@@ -1,16 +1,15 @@
 const reader = {
     input : require('fs').readFileSync('input.txt').toString().split("\r\n"),
     // input : require('fs').readFileSync('/dev/stdin').toString().split("\n"),
+    index : 0,
     read : function(){
-        return this.input.shift().split(" ").map(e=>parseInt(e));
+        return this.input[this.index++].split(" ").map(e=>parseInt(e));
     }
 }
 const n = parseInt(reader.input.shift());
 let childs = Array.from({length:n+1}, ()=>new Object());
-let [p,c,v] = reader.read();
-childs[p][c] = v;
-let root = p;
-for (let i=1; i<n-1; i++){
+let root = 1;
+for (let i=1; i<n; i++){
     let [p,c,v] = reader.read();
     childs[p][c] = v;
 }
@@ -22,21 +21,17 @@ function DFS(node){
     let leng = [];
     for (let key of keys)
         leng.push(DFS(key)+childs[node][key]);
-    if (leng.length > 1){
-        let [first, second] = [0,0];
-        for (let e of leng){
-            if (e > first){
-                second = first;
-                first = e;
-            }
-            else if (e > second)
-                second = e;
+    let [first, second] = [0,0];
+    for (let e of leng){
+        if (e > first){
+            second = first;
+            first = e;
         }
-        answer = Math.max(answer,first+second);
-        return first;
+        else if (e > second)
+            second = e;
     }
-    else
-        return leng[0];
+    answer = Math.max(answer,first+second);
+    return first;
 }
 DFS(root);
 console.log(answer);
