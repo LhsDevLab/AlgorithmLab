@@ -3,7 +3,7 @@ const reader = {
     // input : require('fs').readFileSync('/dev/stdin').toString().split("\n"),
     index : 0,
     readLine : function(){
-        return this.input[index++];
+        return this.input[this.index++];
     },
     readList : function(delimiter){
         delimiter = delimiter == undefined ? " " : delimiter;
