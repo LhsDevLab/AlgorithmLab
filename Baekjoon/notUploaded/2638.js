@@ -1,8 +1,9 @@
 const reader = {
     input : require('fs').readFileSync('input.txt').toString().split("\r\n"),
     // input : require('fs').readFileSync('/dev/stdin').toString().split("\n"),
+    index : 0,
     read : function(){
-        return this.input.shift().split(" ").map(e=>parseInt(e));
+        return this.input[this.index++].split(" ").map(e=>parseInt(e));
     }
 }
 let [N,M] = reader.read();

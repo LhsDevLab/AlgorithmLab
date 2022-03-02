@@ -1,10 +1,12 @@
 const reader = {
     input : require('fs').readFileSync('input.txt').toString().split("\r\n"),
     // input : require('fs').readFileSync('/dev/stdin').toString().split("\n"),
+    index : 0,
     readLine : function(){
-        return this.input.shift();
+        return this.input[index++];
     },
     readList : function(delimiter){
+        delimiter = delimiter == undefined ? " " : delimiter;
         return this.readLine().split(delimiter).map(e=>parseInt(e));
     }
 }
