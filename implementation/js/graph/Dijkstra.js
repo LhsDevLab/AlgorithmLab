@@ -12,6 +12,7 @@ function Dijkstra(start, graph){
         temp = graph[minNode];
         for (let i in res)
             res[i] = Math.min(res[i], temp[i]+res[minNode]);
+            //res[i] = Math.min(res[i], (temp[i] == undefined ? Infinity : temp[i])+res[minNode]);
     }
     return res;
 }
