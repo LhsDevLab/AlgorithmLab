@@ -63,7 +63,7 @@ let LinkedList = {
             },
         }
     },
-    from : function(src){
+    from : function(src){ // not implemented
         if (Array.isArray(src)){
         }
     }
