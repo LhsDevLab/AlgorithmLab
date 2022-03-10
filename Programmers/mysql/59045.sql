@@ -1,0 +1,4 @@
+SELECT  a.ANIMAL_ID,	a.ANIMAL_TYPE,	a.NAME
+from ANIMAL_INS as a join ANIMAL_OUTS as b on a.ANIMAL_ID=b.ANIMAL_ID
+where not (SEX_UPON_INTAKE LIKE '%Spayed%' or SEX_UPON_INTAKE LIKE '%Neutered%')
+ and (SEX_UPON_OUTCOME LIKE '%Spayed%' or SEX_UPON_OUTCOME LIKE '%Neutered%')
