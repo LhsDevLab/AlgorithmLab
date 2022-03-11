@@ -1,5 +1,5 @@
 A,B = input(),input();
-s = len(A);
+s = len(B);
 dp = [0]*(s+1);
 for a in A:
     next = [0]*(s+1);
