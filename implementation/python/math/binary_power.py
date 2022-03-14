@@ -1,4 +1,4 @@
-def power(base,expo):
+def binary_power(base,expo):
     res = 1;
     stack = [];
     while expo != 1:

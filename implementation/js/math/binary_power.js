@@ -1,7 +1,7 @@
-function power(base, exponent){
+function binary_power(base, exponent){
     let res = 1;
     stack = [];
-    while (exponent != 1){
+    while (exponent != 0){
         if (exponent%2 == 0){
             stack.push(2);
             exponent /= 2;
