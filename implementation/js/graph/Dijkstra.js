@@ -1,6 +1,7 @@
 function Dijkstra(start, graph){
     const size = graph.length;
     let res = Array.from({length:size},()=>Infinity);
+    let previous = [];
     res[start] = 0;
     let remain = new Set(Array.from({length:size},(_,i)=>i));
     while(remain.size != 0){
@@ -10,11 +11,16 @@ function Dijkstra(start, graph){
         },temp.pop());
         remain.delete(minNode);
         temp = graph[minNode];
-        for (let i in res)
-            res[i] = Math.min(res[i], temp[i]+res[minNode]);
-            //res[i] = Math.min(res[i], (temp[i] == undefined ? Infinity : temp[i])+res[minNode]);
+        for (let i in res){
+            let newPath = temp[i]+res[minNode];//(temp[i] == undefined ? Infinity : temp[i])+res[minNode]);
+            
+            if (newPath < res[i]){
+                res[i] = newPath;
+                previous[i] = minNode;
+            }
+        }
     }
-    return res;
+    return [res,previous];
 }
 console.log(Dijkstra( 0,
     [
