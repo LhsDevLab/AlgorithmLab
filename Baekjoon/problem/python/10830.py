@@ -26,4 +26,4 @@ for e in stack[::-1]:
     elif e == 2:
         res = mul(res,res);
 for e in res:
-    print(' '.join(map(str,e)));
+    print(' '.join(map(lambda e: str(e%1000),e)));
