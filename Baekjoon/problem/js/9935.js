@@ -27,4 +27,4 @@ for (let e of stack){
         res.push(e);
     }
 }
-console.log(res.length == 0 ? 'FLULA' : res.join(''));
+console.log(res.length == 0 ? 'FRULA' : res.join(''));
