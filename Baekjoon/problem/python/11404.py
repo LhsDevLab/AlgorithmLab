@@ -1,5 +1,5 @@
 import sys;
-
+INF = float("inf");
 def F_W(edges):
     N = len(edges);
     for _ in range(N-1):
@@ -18,7 +18,7 @@ def F_W(edges):
 
 n = int(sys.stdin.readline());
 m = int(sys.stdin.readline());
-edges = [[float("inf") for _ in range(n+1)] for _ in range(n+1)];
+edges = [[INF for _ in range(n+1)] for _ in range(n+1)];
 for i in range(n+1):
     edges[i][i] = 0;
 for _ in range(m):
@@ -27,4 +27,4 @@ for _ in range(m):
         edges[a][b] = c;
 F_W(edges);
 for e in edges[1:]:
-    print(' '.join(map(str, e[1:])));
+    print(' '.join(map(lambda e : str(e) if e != INF else '0' , e[1:])));
