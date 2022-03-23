@@ -11,7 +11,7 @@ const reader = {
 }
 let [N,M] = reader.readList();
 let arr = reader.readList();
-arr.sort();
+arr.sort((a,b)=>a-b);
 let res = [];
 let visited = new Set();
 function func(start){
