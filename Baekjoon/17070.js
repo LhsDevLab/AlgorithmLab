@@ -17,21 +17,24 @@ DP[0][1][0] = 1;
 const room = [];
 for (let i=0; i<N; i++)
     room.push(reader.readList());
-function check(r,c){
+function move(pos,dir){
+    let [a,b] = dirSet[dir];
+    return [pos[0]+a,pos[1]+b];
+}
+function check(pos){
     try{
-        if (room[r][c] == 0)
+        if (room[pos[0]][pos[1]] == 0)
             return true;
     }catch(e){}
     return false;
 }
-function validDir(r,c,dir){
+function validDir(pos,dir){
     let res = new Set();
-
-    if (check(r,c+1))
+    if (check(move(pos,0)))
         res.add(0);
-    if (check(r+1,c))
+    if (check(move(pos,2)))
         res.add(2);
-    if (res.size == 2 && check(r+1,c+1))
+    if (res.size == 2 && check(move(pos,1)))
         res.add(1);
     if (dir == 0)
         res.delete(2);
@@ -39,16 +42,16 @@ function validDir(r,c,dir){
         res.delete(0);
     return res;
 }
-let queue = [[0,1,0]];
+let queue = [[[0,1],0]];
 while(queue.length != 0){
-    console.log(queue)
-    let [r,c,dir] = queue.pop();
-    for (let e of validDir(r,c,dir)){
-        let [a,b] = dirSet[e];
-        a += r;
-        b += c;
-        DP[a][b][e] += DP[r][c][dir];
-        queue.push([a,b,e]);
+    let [pos,dir] = queue.pop();
+    for (let e of validDir(pos,dir)){
+        let next = move(pos,e)
+        DP[next[0]][next[1]][e] += DP[pos[0]][pos[1]][dir];
+        queue.push([next,e]);
     }
+}
+for(let e of DP){
+    console.log(e.map(e=>e.toString()).join(' - '));
 }
 console.log(DP[N-1][N-1].reduce((a,c)=>a+c));
