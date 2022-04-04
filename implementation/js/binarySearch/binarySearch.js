@@ -29,7 +29,7 @@ function findTarget(arr, target){
         else
             end = mid;
     }
-    return end;
+    return false;
 }
 let arr = [1,1,1,1,3,5,5,6,7,8,9];
 console.log(arr);

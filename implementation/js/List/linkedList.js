@@ -2,18 +2,22 @@ let LinkedList = {
     make : function(){
         return {
             length : 0,
-            pop : function(){
-                if (this.tail === undefined)
-                    return undefined;
-                else{
-                    temp = this.tail;
-                    this.tail = temp.f;
-                    if (this.tail !== undefined)
-                        this.tail.b = undefined;
-                    else
-                        this.head = undefined;
-                    this.length--;
-                    return temp.v;
+            pop : function(idx){
+                if (idx === undefined){
+                    if (this.tail === undefined)
+                        return undefined;
+                    else{
+                        temp = this.tail;
+                        this.tail = temp.f;
+                        if (this.tail !== undefined)
+                            this.tail.b = undefined;
+                        else
+                            this.head = undefined;
+                        this.length--;
+                        return temp.v;
+                    }
+                }else{//not implemented
+
                 }
             },
             push : function(v){
