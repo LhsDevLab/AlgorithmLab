@@ -1,11 +1,11 @@
-let [N,L] = require('fs').readFileSync('input.txt').toString().split(" ").map(e => parseInt(e));
-//readFileSync('/dev/stdin')
+let [N,L] = [5050, 100]
+//require('fs').readFileSync('/dev/stdin').toString().split(" ").map(e => parseInt(e));
 let count = 1;
 for (; count<L; count++)
     N -= count;
 while(N%count != 0){
     N -= count;
-    if (N < count){
+    if (N < count || count == 100){
         N = -1;
         break;
     }

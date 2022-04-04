@@ -11,15 +11,14 @@ const reader = {
 }
 const N = parseInt(reader.readLine());
 let board = [];
+let answer = 0;
 for(let i=0; i<N; i++)
     board.push(reader.readList());
 for (let i in board){
     for (let j in board)
-        board[i][j] = board[i][j] == 0 ? 0 : Math.log2(board[i][j]);
+        if (answer < board[i][j])
+            answer = board[i][j];
 }
-let answer = board.reduce((a,c)=>{
-    return Math.min(a, Math.min(...c));
-},Infinity);
 function move(board, dir){
     let res = Array.from({length:N},()=>
         Array.from({length:N}, ()=>0)
@@ -53,8 +52,8 @@ function move(board, dir){
                     return c;
                 if (a==c){
                     if (answer <= a)
-                        answer = a+1;
-                    temp.push(a+1);
+                        answer = a*2;
+                    temp.push(a*2);
                     return null;
                 }
                 temp.push(a);
@@ -80,4 +79,4 @@ function dfs(base,depth){
         dfs(move(base,i), depth+1);
 }
 dfs(board,0);
-console.log(2**answer);
+console.log(answer);
