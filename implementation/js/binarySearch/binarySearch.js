@@ -1,24 +1,29 @@
-function binSearch(start, end, condi){
+function lowerBound(arr, target, keys){
+    keys = keys === undefined ? (n)=>arr[n] : keys;
+    let [start,end] = [0,arr.length];
     while (start < end){
         let mid = parseInt((start+end)/2);
-        if (condi(mid))
+        if (keys(mid) < target)
+            start = mid+1;
+        else
+            end = mid;
+    }
+    return end-1;
+}
+function upperBound(arr, target, keys){
+    keys = keys === undefined ? (n)=>arr[n] : keys;
+    let [start,end] = [0,arr.length];
+    while (start < end){
+        let mid = parseInt((start+end)/2);
+        if (keys(mid) <= target)
             start = mid+1;
         else
             end = mid;
     }
     return end;
 }
-function lowerBound(arr, target){
-    return binSearch(0,arr.length,(i)=>{
-        return arr[i] < target;
-    })-1;
-}
-function upperBound(arr, target){
-    return binSearch(0,arr.length,(i)=>{
-        return arr[i] <= target;
-    });
-}
-function findTarget(arr, target){
+function findTarget(arr, target, keys){
+    keys = keys === undefined ? (n)=>n : keys;
     let [start,end] = [0,arr.length];
     while (start < end){
         let mid = parseInt((start+end)/2);
