@@ -34,10 +34,13 @@ for (;K>0;K--)
     Bags.push(parseInt(reader.readLine()));
 Items.sort((a,b)=>b[2]-a[2]);
 Bags.sort((a,b)=>a-b);
-console.log(Items);
-console.log(Bags);
+let answer = 0;
 for (let item of Items){
     let idx = findTarget(Bags, item[0]);
-    console.log(idx)
-    
+    if (Bags[idx] !== undefined)
+        answer += item[1];
+    Bags.splice(idx,1);
+    if (Bags.length == 0)
+        break;
 }
+console.log(answer);
