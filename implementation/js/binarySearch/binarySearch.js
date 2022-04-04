@@ -19,10 +19,17 @@ function upperBound(arr, target){
     });
 }
 function findTarget(arr, target){
-    let res = binSearch(0,arr.length,(i)=>{
-        return arr[i] < target;
-    });
-    return arr[res] == target ? res : false;
+    let [start,end] = [0,arr.length];
+    while (start < end){
+        let mid = parseInt((start+end)/2);
+        if (target == arr[mid])
+            return mid;
+        else if (arr[mid] < target)
+            start = mid+1;
+        else
+            end = mid;
+    }
+    return end;
 }
 let arr = [1,1,1,1,3,5,5,6,7,8,9];
 console.log(arr);
