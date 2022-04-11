@@ -11,6 +11,16 @@ const reader = {
     }
 }
 const [N,S] = reader.readList();
-let count = Array.from({length:N}, ()=>0);
+let count = S == 0 ? -1 : 0;
 let arr = reader.readList();
-arr.sort();
+function travel(idx, total){
+    if (idx == N){
+        if (total == S)
+            count += 1;
+        return;
+    }
+    travel(idx+1, total);
+    travel(idx+1, total+arr[idx]);
+}
+travel(0,0);
+console.log(count);
