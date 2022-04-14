@@ -18,17 +18,16 @@ for (let i=0; i<N; i++){
     let target = Trie;
     for (let c of reader.readLine())
         target = add(target, c);
+    target['/'] = true;
 }
 for (let i=0; i<M; i++){
     let target = Trie;
     for (let c of reader.readLine()){
-        if (target == undefined){
-            target = {t:0};
+        if (target == undefined)
             break;
-        }
         target = target[c];
     }
-    if (Object.keys(target).length == 0)
+    if (target != undefined && target['/'])
         answer += 1;
 }
 console.log(answer);
