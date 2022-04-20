@@ -1,3 +1,18 @@
+const reader = {
+    input: require('fs').readFileSync('input.txt').toString().split("\r\n"),
+    // input : require('fs').readFileSync('/dev/stdin').toString().split("\n"),
+    index: 0,
+    readItem(){
+        return parseInt(this.input[this.index++]);
+    },
+    readList(){
+        return this.input[this.index++].split(" ").map(e => parseInt(e));
+    }
+}
+const [N, M, K] = reader.readList();
+const arr = [];
+for (let i=0; i<N; i++)
+    arr[i] = reader.readItem();
 const segementTree = {
     parent(node){
         return parseInt((node-1)/2);
@@ -49,8 +64,12 @@ const segementTree = {
         func(0,this.size-1,0);
     }
 }
-segementTree.init([1,2,3,4,5]);
-console.log(segementTree.tree);
-console.log(segementTree.getSum(1,2));
-segementTree.update(0,2);
-console.log(segementTree.tree);
+segementTree.init(arr);
+for (let i=0; i<M+K; i++){
+    let [a,b,c] = reader.readList();
+    [,(b,c)=>{
+        segementTree.update(b, c-arr[b]);
+    },(b,c)=>{
+        console.log(segementTree.getSum(b, c-1));
+    }][a](b-1,c);
+}
