@@ -12,9 +12,23 @@ const reader = {
 const [Size, Box] = [10000, 10];
 for (let i = reader.readItem(); i > 0; i--) {
     let answer = 0;
+    let arr = [];
+    for (let j = reader.readItem(); j > 0; j--) 
+        arr.push(reader.readList());
+    arr.sort((a,b)=>a[0]-b[0]);
     let countBoard = Array.from({ length: Size },()=>new Object());
-    for (let j = reader.readItem(); j > 0; j--) {
-        let [R, C] = reader.readList();
+    let rowInfo = [-1,new Set()];
+    for (let [R,C] of arr) {
+        if (rowInfo[0] != R){
+            rowInfo[0] = R;
+            let temp = [];
+            for (let e of rowInfo[1]){
+                if (e+10<R)
+                    temp.push(e);
+            }
+            temp.forEach(e=>rowInfo[1].delete(e));
+            rowInfo[1].add(R);
+        }
         for (let r = R > Box ? R - Box : 0; r<=R; r++){
             for (let c = C > Box ? C - Box : 0; c <= C; c++){
                 if (countBoard[r][c] === undefined)
