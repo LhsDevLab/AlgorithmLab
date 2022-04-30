@@ -1,3 +1,4 @@
+//7573
 const reader = {
     input: require('fs').readFileSync('input.txt').toString().split("\r\n"),
     // input : require('fs').readFileSync('/dev/stdin').toString().split("\n"),
@@ -8,22 +9,25 @@ const reader = {
 }
 let [N,I,M] = reader.read().split(" ").map(e => parseInt(e));
 I /= 2;
-const Fishs = new Set();
-let answer = 0;
+const Fishs = {
+    set : new Set(),
+    add(v){
+        this.set.add(v);
+    },
+    has(r,c){
+        return this.set.has(r+" "+c);
+    }
+};
 for (let i=0; i<M; i++)
     Fishs.add(reader.read());
-for (let [R,C] of Array.from(Fishs).map(e=>e.split(' ').map(e=>parseInt(e)))){
-    for (let height = 1; height<I; height++){
-        let width = I-height;
-        let count = 0;
-        for (let r = R+height; r>=R; r--){
-            for (let c = C+width; c>=C; c--){
-                if (Fishs.has(r+" "+c))
-                    count+=1;
-            }
-        }
-        if (count > answer)
-            answer = count;
+
+const shapes = [];
+for (let i=1; i<I; i++)
+    shapes.push([i,I-i]);
+    
+let answer = 0;
+for (let [R,C] of Array.from(Fishs.set).map(e=>e.split(' ').map(e=>parseInt(e)))){
+    for (let [H,W] of shapes){
+
     }
 }
-console.log(answer);
