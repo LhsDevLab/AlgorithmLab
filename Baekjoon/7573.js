@@ -8,7 +8,7 @@ const reader = {
 }
 let [N, I, M] = reader.read().split(" ").map(e => parseInt(e));
 I /= 2;
-let count = [];
+let count = {};
 for (let i=0; i<M; i++){
 
 }
