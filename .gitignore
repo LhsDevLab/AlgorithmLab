@@ -1,5 +1,5 @@
 input*.txt
 output*.txt
-test.js
-test.py
+*.js
+*.py
 java_project/
