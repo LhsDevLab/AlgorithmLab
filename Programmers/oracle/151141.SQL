@@ -1,0 +1,26 @@
+-- 코드를 입력하세요
+SELECT HISTORY_ID, 
+    (SELECT DAILY_FEE 
+       FROM CAR_RENTAL_COMPANY_CAR T2 
+      WHERE T1.CAR_ID = T2.CAR_ID)
+     *
+    (END_DATE - START_DATE + 1)
+     *
+    (100 - NVL(
+        (SELECT DISCOUNT_RATE 
+           FROM CAR_RENTAL_COMPANY_DISCOUNT_PLAN
+          WHERE CAR_TYPE = '트럭'
+            AND DURATION_TYPE LIKE 
+            CASE WHEN (T1.END_DATE - T1.START_DATE + 1) >= 90 THEN '90%'
+                 WHEN (T1.END_DATE - T1.START_DATE + 1) >= 30 THEN '30%'
+                 WHEN (T1.END_DATE - T1.START_DATE + 1) >= 7 THEN '7%'
+                 ELSE '---' END
+        ),
+        0
+    ))/100 AS FEE
+  FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY T1
+ WHERE CAR_ID IN (
+     SELECT CAR_ID 
+       FROM CAR_RENTAL_COMPANY_CAR 
+      WHERE CAR_TYPE = '트럭')
+ ORDER BY 2 DESC, 1 DESC;
