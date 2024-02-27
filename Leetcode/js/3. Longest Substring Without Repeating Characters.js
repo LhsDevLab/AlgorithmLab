@@ -9,6 +9,7 @@ var lengthOfLongestSubstring = function (s) {
 	const Last = {};
 	for (let i = 0; i < s.length; i++) {
 		const char = s.charAt(i);
+		console.log(s.substring(first, i + 1));
 		if (Last[char] !== undefined && Last[char] >= first) {
 			answer = Math.max(i - first, answer);
 
@@ -17,8 +18,13 @@ var lengthOfLongestSubstring = function (s) {
 				first.length === 0
 					? i
 					: first.reduce((a, c) => (a < c ? a : c));
+
+			console.log(s.charAt(first), answer);
 		}
 		Last[char] = i;
+		console.log(Last);
 	}
 	return answer;
 };
+
+console.log(lengthOfLongestSubstring("abcabcbb"));
