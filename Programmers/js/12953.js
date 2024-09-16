@@ -16,7 +16,16 @@ console.log = new Proxy(console.log, {
 /*------------------------------------*/
 
 function solution(n) {
-	function gcd(p, q) {}
+	function gcd(p, q) {
+		if (q == 0) return p;
+		return gcd(q, p % q);
+	}
+	function lcm(p, q) {
+		return p*q / gcd(p,q);
+	}
+	return n.reduce((a,c)=>{
+		return lcm(a,c);
+	});
 }
 
 /*------------------------------------*/
@@ -27,5 +36,5 @@ const cases = [
 
 for (const idx in cases) {
 	console.log(`<<case : ${parseInt(idx) + 1}>>`);
-	console.log(solution(...cases[idx]));
+	console.log(solution(cases[idx]));
 }
